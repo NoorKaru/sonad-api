@@ -120,6 +120,7 @@ export type WordForm =
 
 export interface IDictionaryEntry {
 	word: string;
+	wordId: string;
 	wordForms: WordForm;
 	partOfSpeech: partOfSpeechesTag[];
 	meanings: Meaning[];
@@ -131,18 +132,29 @@ export interface IDictionaryEntry {
 
 export class DictionaryEntry implements IDictionaryEntry {
 	word: string;
+	wordId: string;
 	partOfSpeech: partOfSpeechesTag[];
 	meanings: Meaning[];
 	wordForms: WordForm;
 
-	constructor(word: string, partOfSpeech: Array<partOfSpeechesTag>, meanings: Array<Meaning>, wordForms: WordForm) {
+	constructor(
+		word: string,
+		wordId: string,
+		partOfSpeech: Array<partOfSpeechesTag>,
+		meanings: Array<Meaning>,
+		wordForms: WordForm
+	) {
 		this.word = word;
+		this.wordId = wordId;
 		this.partOfSpeech = partOfSpeech;
 		this.wordForms = wordForms;
 		this.meanings = meanings;
 	}
 	getWord(): string {
 		return this.word;
+	}
+	getWordId(): string {
+		return this.wordId;
 	}
 	getPartOfSpeech(): partOfSpeechesTag[] {
 		return this.partOfSpeech;

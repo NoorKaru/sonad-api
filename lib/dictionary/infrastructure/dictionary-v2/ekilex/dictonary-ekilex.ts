@@ -85,6 +85,8 @@ export default class DictonaryEkilex implements ExternalDictionaryV2 {
 		}, {});
 
 		return {
+			lexemeId: lexeme.lexemeId,
+			meaningId: lexeme.meaningId,
 			definition: definitions,
 			partOfSpeech: partOfSpeechTags,
 			rection,
@@ -102,27 +104,6 @@ export default class DictonaryEkilex implements ExternalDictionaryV2 {
 		}
 
 		return searchResult.words.map((word) => word.wordId);
-		//  TODO fix
-		// Scraping https://sonaveeb.ee/search/unif/est/eki/tubil/1 is broken
-		// const resultHtml = await this.sonaveebClient.getResultPage(searchTerm);
-
-		// const root = parse(resultHtml);
-
-		// const otherForm = root.querySelector('[id=form-words] [data-word]');
-
-		// if (!otherForm?.textContent) {
-		// 	return [];
-		// }
-
-		// const newWord = otherForm.textContent;
-
-		// const newSearchResult = await this.ekilexClient.words.search(newWord, ['eki']);
-
-		// if (newSearchResult.totalCount > 0) {
-		// 	return newSearchResult.words.map((word) => word.wordId);
-		// }
-
-		// return [];
 	}
 
 	async getDictionaryEntry(searchTerm: string): Promise<DictionaryResponseV2> {
@@ -140,7 +121,7 @@ export default class DictonaryEkilex implements ExternalDictionaryV2 {
 
 				const wordForms = wordDetail.word.paradigms.map(this.extractWordFormsFromParadigm).flat();
 
-				const rest = wordDetail.lexemes
+				const meanings = wordDetail.lexemes
 					.filter((lexeme) => lexeme.datasetCode === 'eki')
 					.map(this.extractFromLexeme);
 
@@ -150,9 +131,10 @@ export default class DictonaryEkilex implements ExternalDictionaryV2 {
 						?.members?.map((member) => member.wordValue) ?? [];
 
 				return {
+					wordId: wordDetail.word.wordId,
 					wordClasses,
 					wordForms,
-					meanings: rest,
+					meanings,
 					similarWords,
 				};
 			});

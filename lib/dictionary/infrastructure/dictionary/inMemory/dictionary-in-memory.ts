@@ -5,6 +5,7 @@ import { right } from '@lib/shared/common/either';
 
 export default class DictionaryInMemory implements ExternalDictionary {
 	async getWord(word: string): Promise<DictionaryResponse> {
+		const wordId = '247445';
 		const partOfSpeechesTags: Array<partOfSpeechesTag> = ['omadussõna'];
 		const wordForms = {
 			singular: {
@@ -41,7 +42,7 @@ export default class DictionaryInMemory implements ExternalDictionary {
 			},
 		];
 
-		const dictionaryEntry = new DictionaryEntry(word, partOfSpeechesTags, meanings, wordForms);
+		const dictionaryEntry = new DictionaryEntry(word, wordId, partOfSpeechesTags, meanings, wordForms);
 		return right(dictionaryEntry);
 	}
 }

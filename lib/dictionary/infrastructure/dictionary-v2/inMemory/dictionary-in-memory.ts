@@ -6,6 +6,7 @@ export default class DictionaryV2InMemory implements ExternalDictionaryV2 {
 	async getDictionaryEntry(searchTerm: string): Promise<DictionaryResponseV2> {
 		return [
 			{
+				wordId: '247445',
 				partOfSpeech: ['noomen'],
 				wordForms: [
 					{ inflectionType: '16', code: 'SgN', morphValue: 'ainsuse nimetav', value: 'tubli' },
@@ -45,6 +46,8 @@ export default class DictionaryV2InMemory implements ExternalDictionaryV2 {
 				],
 				meanings: [
 					{
+						lexemeId: '1369121',
+						meaningId: '110954',
 						definition:
 							'(inimese vm elusolendi kohta:) millegagi hästi hakkama saav, ootustele vastav, omadustelt millekski hea ja sobiv,selline, kes saab hästi hakkama, on milleski hea',
 						examples:
@@ -71,6 +74,8 @@ export default class DictionaryV2InMemory implements ExternalDictionaryV2 {
 						],
 					},
 					{
+						lexemeId: '1369122',
+						meaningId: '110955',
 						definition:
 							'(nähtuste, olukordade vms kohta:) selline, mis väärib tunnustust, tulemuslik, kiiduväärt,tunnustust vääriv,hea, korralik',
 						examples: 'Esikoht on tubli tulemus.,Tubli töö, ajakirjanikud!,Tänan kolleege tubli töö eest!',
@@ -92,11 +97,15 @@ export default class DictionaryV2InMemory implements ExternalDictionaryV2 {
 						],
 					},
 					{
+						lexemeId: '1369123',
+						meaningId: '110956',
 						definition: '(esemete kohta:) heas korras, oma ülesannet hästi täitev, vastupidav vms',
 						examples: 'Mehed hankisid ülesõiduks tubli paadi.',
 						synonyms: ['toimiv', 'tegus', 'korralik', 'vastupidav'],
 					},
 					{
+						lexemeId: '1369124',
+						meaningId: '110957',
 						definition: 'märgib üldisemalt millegi suurust, tugevust, intensiivsust, tõhusust',
 						examples: 'Poiss sai isalt tubli keretäie.,Retsensioon sisaldas tubli annuse kriitikat.',
 						synonyms: [
@@ -111,12 +120,6 @@ export default class DictionaryV2InMemory implements ExternalDictionaryV2 {
 							'tüse,priske',
 							'tugev',
 						],
-					},
-					{
-						definition:
-							'(rõhutava sõnana:) kinnitab, et midagi on mainitavast hulgast, määrast pigem rohkem kui vähem',
-						examples: 'Jäime esimestest tubli pool tundi maha.',
-						synonyms: ['kõva'],
 					},
 				],
 			},

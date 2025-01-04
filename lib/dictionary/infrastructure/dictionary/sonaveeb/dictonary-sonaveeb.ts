@@ -27,7 +27,7 @@ export default class DictonarySonaveeb implements ExternalDictionary {
 			const wordId = await this.getWordId(word);
 
 			if (!wordId) {
-				const dictionaryEntry = new DictionaryEntry(word, [], [], []);
+				const dictionaryEntry = new DictionaryEntry(word, '', [], [], []);
 
 				return right(dictionaryEntry);
 			}
@@ -45,7 +45,7 @@ export default class DictonarySonaveeb implements ExternalDictionary {
 				this.logger
 			)(partOfSpeechesTags[0], rootElement);
 
-			const dictionaryEntry = new DictionaryEntry(word, partOfSpeechesTags, meanings, wordForms);
+			const dictionaryEntry = new DictionaryEntry(word, wordId, partOfSpeechesTags, meanings, wordForms);
 
 			return right(dictionaryEntry);
 		} catch (err) {
@@ -62,6 +62,8 @@ export default class DictonarySonaveeb implements ExternalDictionary {
 	}
 
 	private async getWordId(word: string) {
+		//  TODO fix
+		// Scraping https://sonaveeb.ee/search/unif/est/eki/tubli/1 is broken
 		const resultHtml = await this.sonaveebClient.getResultPage(word);
 		const root = parse(resultHtml);
 
