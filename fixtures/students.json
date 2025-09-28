@@ -1,0 +1,45 @@
+[
+	{ "firstname": "Wolfi", "lastname": "Geiger", "studySets": [] },
+	{
+		"firstname": "Liis",
+		"lastname": "Miido",
+		"studySets": [
+			{
+				"id": "",
+				"title": "First Study Set",
+				"description": "My first study set",
+				"flashcards": [
+					{ "front": { "clue": "tubli" }, "back": { "answer": "gut gemacht" } },
+					{ "front": { "clue": "koer" }, "back": { "answer": "hund" } }
+				]
+			},
+			{
+				"id": "",
+				"title": "Second Study Set",
+				"description": "My second study set",
+				"flashcards": [{ "front": { "clue": "Ma lähen koju" }, "back": { "answer": "Ich gehe nach Hause" } }]
+			}
+		]
+	},
+	{
+		"firstname": "Beni",
+		"lastname": "Geiger",
+		"studySets": [
+			{
+				"id": "",
+				"title": "First Study Set",
+				"description": "My first study set",
+				"flashcards": [
+					{ "front": { "clue": "tubli" }, "back": { "answer": "gut gemacht" } },
+					{ "front": { "clue": "koer" }, "back": { "answer": "hund" } }
+				]
+			},
+			{
+				"id": "",
+				"title": "Second Study Set",
+				"description": "My second study set",
+				"flashcards": [{ "front": { "clue": "Ma lähen koju" }, "back": { "answer": "Ich gehe nach Hause" } }]
+			}
+		]
+	}
+]

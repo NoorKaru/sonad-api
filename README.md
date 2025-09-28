@@ -1,10 +1,8 @@
 # SONAPI 🇪🇪 - An API for the Estonian language
 
-
-* [Overview](#overview)
-* [Installation and requirements](#installation-and-requirements)
-* [Hexagonal architecture](#hexagonal-architecture)
-
+-   [Overview](#overview)
+-   [Installation and requirements](#installation-and-requirements)
+-   [Hexagonal architecture](#hexagonal-architecture)
 
 ## Overview
 
@@ -27,12 +25,11 @@ cp .env.docker .env
 docker-compose up --build
 ```
 
-| URL                                                              | Information                                            |
-|------------------------------------------------------------------|--------------------------------------------------------|
-| [http://localhost:8083/v1/{word}](http://localhost:8083/v1/tubli)| API Endpoint                                           |
-| [http://localhost:9090/](http://localhost:9090/)                 | Prometheus instance to collect NodeJS and API metrics. |
-| [http://localhost:3000/](http://localhost:3000/)                 | Grafana Dashboard                                      |
-
+| URL                                                               | Information                                            |
+| ----------------------------------------------------------------- | ------------------------------------------------------ |
+| [http://localhost:8083/v1/{word}](http://localhost:8083/v1/tubli) | API Endpoint                                           |
+| [http://localhost:9090/](http://localhost:9090/)                  | Prometheus instance to collect NodeJS and API metrics. |
+| [http://localhost:3000/](http://localhost:3000/)                  | Grafana Dashboard                                      |
 
 ### Local NodeJS environment
 
@@ -44,12 +41,12 @@ npm install
 npm run dev
 ```
 
-| URL                                                              | Information                                            |
-|------------------------------------------------------------------|--------------------------------------------------------|
-| [http://localhost:8083/v1/{word}](http://localhost:8083/v1/tubli)| API Endpoint                                           |
-
+| URL                                                               | Information  |
+| ----------------------------------------------------------------- | ------------ |
+| [http://localhost:8083/v1/{word}](http://localhost:8083/v1/tubli) | API Endpoint |
 
 In order to enable rate-limiting and caching add a redis connection string to the REDIS environment variable.
+
 ```
 DICTIONARY="sonaveeb"
 LOGGER="winston"
@@ -57,10 +54,15 @@ PORT=8083
 REDIS="127.0.0.1:6379"
 ```
 
-
 ## Hexagonal architecture
 
 <h1 align="center">
   <img src="./assets/hexagonal.png" alt="Marton Lederer" />
 </h1>
 
+https://lostechies.com/jimmybogard/2012/08/22/busting-some-cqrs-myths/
+https://martinfowler.com/bliki/CQRS.html
+
+https://khalilstemmler.com/articles/typescript-domain-driven-design/aggregate-design-persistence/
+
+https://github.com/stemmlerjs/white-label/tree/master

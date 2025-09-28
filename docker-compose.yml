@@ -1,64 +1,74 @@
-version: "3.8"
+version: '3.8'
 services:
-  redis: 
-    image: redis:latest
-    container_name: client
-    restart: unless-stopped
-    expose:
-      - 6379
-  sonad-api:
-    container_name: sonad-api
-    env_file:
-        - .env
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - 8083:8083
-    restart: "on-failure"
-  
+    # redis:
+    #     image: redis:7.0.15
+    #     container_name: sonapi-redis
+    #     restart: unless-stopped
+    #     expose:
+    #         - 6379
 
-  postgres:
-    container_name: postgres_sonapi
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: benedikt
-      POSTGRES_PASSWORD: password
-      PGDATA: /data/postgres
-    volumes:
-       - postgres-db:/data/postgres
-    ports:
-      - "5432:5432"
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
-    restart: "always"
-    env_file:
-        - .env
-    ports:
-      - 9090:9090
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-    volumes:
-     - /etc/localtime:/etc/localtime:ro
-     - /etc/timezone:/etc/timezone:ro
-     - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    restart: "always"
-    ports:
-      - 3000:3000
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
-      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
-      - ./grafana/data:/var/lib/grafana
-    user: "1000"
-    depends_on:
-      - prometheus
+    sonapi-api:
+        image: benediktgeiger/sonapi:api-0.0.1
+        container_name: sonapi-api
+        restart: 'on-failure'
+        volumes:
+            - ./assets:/app/db
+        ports:
+            - 8083:8083 # this should be 80:8083 on hetzner I think
+        env_file:
+            - .env.docker
 
-volumes:
-  postgres-db:
-    driver: local
+    # sonad-api:
+    #     container_name: sonapi-api
+    #     env_file:
+    #         - .env
+    #     build:
+    #         context: .
+    #         dockerfile: ./Dockerfile
+    #     ports:
+    #         - 8083:8083
+    #     restart: 'on-failure'
+
+    # postgres:
+    #     container_name: sonapi-api-postgres
+    #     image: postgres:latest
+    #     environment:
+    #         POSTGRES_USER: benedikt
+    #         POSTGRES_PASSWORD: password
+    #         PGDATA: /data/postgres
+    #     volumes:
+    #         - postgres-db:/data/postgres
+    #     ports:
+    #         - '5432:5432'
+    # # prometheus:
+    #   image: prom/prometheus:latest
+    #   container_name: prometheus
+    #   restart: "always"
+    #   env_file:
+    #       - .env
+    #   ports:
+    #     - 9090:9090
+    #   command:
+    #     - --config.file=/etc/prometheus/prometheus.yml
+    #   volumes:
+    #    - /etc/localtime:/etc/localtime:ro
+    #    - /etc/timezone:/etc/timezone:ro
+    #    - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    # grafana:
+    #   image: grafana/grafana:latest
+    #   container_name: grafana
+    #   restart: "always"
+    #   ports:
+    #     - 3000:3000
+    #   volumes:
+    #     - /etc/localtime:/etc/localtime:ro
+    #     - /etc/timezone:/etc/timezone:ro
+    #     - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+    #     - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+    #     - ./grafana/data:/var/lib/grafana
+    #   user: "1000"
+    #   depends_on:
+    #     - prometheus
+# volumes:
+#     postgres-db:
+#         driver: local
