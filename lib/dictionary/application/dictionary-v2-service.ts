@@ -1,5 +1,5 @@
 import { Bus } from '@lib/shared/bus/bus.interface';
-import { GetDictionaryEntryQuery } from '../query/get-dictionary-entry-query';
+import { GetDictionaryEntryQuery } from './queries/get-dictionary-entry-query';
 import { QueryHandlerResponse } from '@lib/shared/bus/query-handler.interface';
 
 export type WordResponse = {

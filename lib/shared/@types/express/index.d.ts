@@ -1,4 +1,4 @@
-import RateLimiterCache from '@lib/web-interface/http/core/ports/rate-limiter.interface';
+import RateLimiterCache from '@lib/primary-adapters/http/ports/rate-limiter.interface';
 import LoggerInterface from '@lib/dictionary/application/ports/logger.interface';
 import CacheRepository from '@lib/dictionary/application/ports/dictionary-cache.interface';
 import RequestLogger from '@lib/dictionary/application/ports/request-logger.interface';

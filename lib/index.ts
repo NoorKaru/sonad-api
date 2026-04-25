@@ -1,5 +1,5 @@
 require('module-alias/register');
-import createServer from '@lib/web-interface/http/core/server';
+import createServer from '@lib/primary-adapters/http/server';
 import { buildServices } from '@lib/config/service-locator';
 import config from './global-config';
 
