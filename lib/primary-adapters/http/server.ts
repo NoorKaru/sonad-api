@@ -2,6 +2,7 @@ import express from 'express';
 import { Express } from 'express';
 import { Services } from '@lib/config/service-locator';
 import router from '@lib/primary-adapters/http/routes/router';
+import { createMcpRouter } from '@lib/primary-adapters/mcp/mcp-adapter';
 
 import {
 	jsonParser,
@@ -26,6 +27,7 @@ const createServer = (services: Services): Express => {
 	server.use(requestLogger);
 	server.use(cacheHandler);
 	router(server, services);
+	server.use('/mcp', createMcpRouter(services));
 	server.use(errorHandler);
 
 	return server;

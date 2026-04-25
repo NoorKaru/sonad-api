@@ -15,6 +15,10 @@ import config from './global-config';
 				context: 'SERVER_START',
 				port,
 			});
+			services.logger.info({
+				message: `MCP server available at http://localhost:${port}/mcp`,
+				context: 'SERVER_START',
+			});
 		});
 	} catch (err) {
 		/* eslint-disable no-console */

@@ -17,6 +17,8 @@ import LoggerBus from '@lib/dictionary/infrastructure/bus/logger-bus';
 import RetryBus from '@lib/dictionary/infrastructure/bus/retry-bus';
 import { GetDictionaryEntryQuery } from '@lib/dictionary/application/queries/get-dictionary-entry-query';
 import { GetDictionaryQueryHandler } from '@lib/dictionary/application/queries/get-dictionary-entry-handler';
+import EtymologyFactory from '@lib/etymology/infrastructure/ekilex/index';
+import EtymologyService from '@lib/etymology/application/etymology-service';
 
 export type Services = {
 	dictionaryV2Service: DictionaryV2Service;
@@ -26,6 +28,7 @@ export type Services = {
 	logger: LoggerInterface;
 	rateLimiter: RateLimiterCacheInterface;
 	requestLogger: RequestLogger;
+	etymologyService: EtymologyService;
 };
 
 export async function buildServices(): Promise<Services> {
@@ -39,6 +42,8 @@ export async function buildServices(): Promise<Services> {
 	queries.set(GetDictionaryEntryQuery.name, new GetDictionaryQueryHandler(dictionaryV2, dictionaryCache, logger));
 	const bus = new RetryBus(new LoggerBus(logger, new RoutingBus(new Map(), queries)));
 
+	const etymologyAdapter = EtymologyFactory.getAdapter(logger);
+
 	return {
 		dictionaryV2Service: new DictionaryV2Service(bus),
 		translatorService: new TranslatorService(translator, logger),
@@ -47,5 +52,6 @@ export async function buildServices(): Promise<Services> {
 		logger,
 		rateLimiter: RateLimiterFactory.getRateLimiter(),
 		requestLogger,
+		etymologyService: new EtymologyService(etymologyAdapter),
 	};
 }
