@@ -79,7 +79,7 @@
 		"nodemon": "^2.0.15",
 		"prettier": "^2.6.1",
 		"supertest": "^6.3.3",
-		"ts-jest": "^29.0.3",
+		"ts-jest": "^29.4.9",
 		"typescript": "^6.0.3",
 		"typescript-eslint": "0.0.1-alpha.0",
 		"winston": "^3.8.1",

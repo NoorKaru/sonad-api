@@ -14,9 +14,12 @@ export default class EkiScraperAdapter implements EtymologyPort {
 			const url = `${ARCHIVE_URL}?Q=${encodeURIComponent(word)}&F=M&C06=et`;
 			const res = await fetch(url);
 			const html = await res.text();
-			return this.parse(html);
+			const entries = this.parse(html);
+			this.logger.info({ message: `Etymology scraped for "${word}": ${entries.length} entries`, context: 'ETYMOLOGY' });
+			return entries;
 		} catch (err) {
-			this.logger.error({ message: 'Failed to scrape etymology from arhiiv.eki.ee', context: 'ETYMOLOGY' });
+			const message = err instanceof Error ? err.message : String(err);
+			this.logger.error({ message: `Etymology scrape failed for "${word}": ${message}`, context: 'ETYMOLOGY' });
 			throw err;
 		}
 	}
