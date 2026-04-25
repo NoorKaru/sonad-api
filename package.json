@@ -1,7 +1,7 @@
 {
 	"name": "sonad-api",
 	"version": "1.0.0",
-	"description": "An API for the estonian language",
+	"description": "An API for the beautiful estonian language",
 	"main": "lib/index.js",
 	"scripts": {
 		"build": "npx tsc",
