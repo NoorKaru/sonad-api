@@ -10,7 +10,6 @@ const config = {
 		},
 	},
 	dictionary: {
-		v1: <string>process.env.DICTIONARY_V1 || 'sonaveeb',
 		v2: <string>process.env.DICTIONARY_V2 || 'ekilex',
 	},
 	ekilex: {
