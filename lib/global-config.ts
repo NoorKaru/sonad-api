@@ -37,6 +37,10 @@ const config = {
 		url: <string>process.env.CACHE_URL || '',
 		ttl: Number(process.env.CACHE_TTL) || 60,
 	},
+	mcp: {
+		sessionTtlMs: Number(process.env.MCP_SESSION_TTL_MS) || 60 * 60 * 1000,
+		allowedOrigins: (process.env.MCP_ALLOWED_ORIGINS ?? '').split(',').map((s) => s.trim()).filter(Boolean),
+	},
 	logger: {
 		level: <string>process.env.LOGGER_LEVEL || 'info',
 		name: <string>process.env.LOGGER_NAME || 'winston',

@@ -1,6 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { Services } from '@lib/config/service-locator';
+import Logger from '@lib/dictionary/application/ports/logger.interface';
 
 // The MCP SDK's zod-compat layer (supporting both zod v3 and v4 simultaneously) causes
 // TypeScript to hit its instantiation depth limit when resolving registerTool generics.
@@ -8,9 +9,30 @@ import { Services } from '@lib/config/service-locator';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyServer = any;
 
+function loggedTool<T extends { word?: string; text?: string }>(
+	logger: Logger,
+	toolName: string,
+	fn: (args: T) => Promise<{ isError?: boolean; content: { type: string; text: string }[] }>
+) {
+	return async (args: T) => {
+		const subject = args.word ?? args.text ?? '';
+		const start = Date.now();
+		const result = await fn(args);
+		logger.info({
+			message: `MCP tool ${toolName}`,
+			context: 'MCP',
+			tool: toolName,
+			subject,
+			durationMs: Date.now() - start,
+			isError: result.isError ?? false,
+		});
+		return result;
+	};
+}
+
 export function registerTools(server: McpServer, services: Services): void {
 	const s = server as AnyServer;
-	const { dictionaryV2Service, etymologyService } = services;
+	const { dictionaryV2Service, etymologyService, logger } = services;
 
 	s.registerTool(
 		'lookup_word',
@@ -21,7 +43,7 @@ export function registerTools(server: McpServer, services: Services): void {
 			inputSchema: { word: z.string().describe('The Estonian word to look up') },
 			annotations: { readOnlyHint: true, openWorldHint: true, idempotentHint: true },
 		},
-		async ({ word }: { word: string }) => {
+		loggedTool(logger, 'lookup_word', async ({ word }: { word: string }) => {
 			try {
 				const result = await dictionaryV2Service.searchWordQuery(word);
 				if (!result || result.length === 0) {
@@ -34,7 +56,7 @@ export function registerTools(server: McpServer, services: Services): void {
 			} catch {
 				return { isError: true, content: [{ type: 'text', text: `Failed to look up "${word}".` }] };
 			}
-		}
+		})
 	);
 
 	s.registerTool(
@@ -46,7 +68,7 @@ export function registerTools(server: McpServer, services: Services): void {
 			inputSchema: { word: z.string().describe('The Estonian word') },
 			annotations: { readOnlyHint: true, openWorldHint: true, idempotentHint: true },
 		},
-		async ({ word }: { word: string }) => {
+		loggedTool(logger, 'get_word_forms', async ({ word }: { word: string }) => {
 			try {
 				const result = await dictionaryV2Service.searchWordQuery(word);
 				if (!result || result.length === 0) {
@@ -60,7 +82,7 @@ export function registerTools(server: McpServer, services: Services): void {
 			} catch {
 				return { isError: true, content: [{ type: 'text', text: `Failed to get forms for "${word}".` }] };
 			}
-		}
+		})
 	);
 
 	s.registerTool(
@@ -72,7 +94,7 @@ export function registerTools(server: McpServer, services: Services): void {
 			inputSchema: { word: z.string().describe('The Estonian word') },
 			annotations: { readOnlyHint: true, openWorldHint: true, idempotentHint: true },
 		},
-		async ({ word }: { word: string }) => {
+		loggedTool(logger, 'find_synonyms', async ({ word }: { word: string }) => {
 			try {
 				const result = await dictionaryV2Service.searchWordQuery(word);
 				if (!result || result.length === 0) {
@@ -100,7 +122,7 @@ export function registerTools(server: McpServer, services: Services): void {
 			} catch {
 				return { isError: true, content: [{ type: 'text', text: `Failed to find synonyms for "${word}".` }] };
 			}
-		}
+		})
 	);
 
 	s.registerTool(
@@ -112,7 +134,7 @@ export function registerTools(server: McpServer, services: Services): void {
 			inputSchema: { word: z.string().describe('The Estonian word to look up etymology for') },
 			annotations: { readOnlyHint: true, openWorldHint: true, idempotentHint: true },
 		},
-		async ({ word }: { word: string }) => {
+		loggedTool(logger, 'get_etymology', async ({ word }: { word: string }) => {
 			try {
 				const result = await etymologyService.getEtymology(word);
 				if (!result.length) {
@@ -125,7 +147,6 @@ export function registerTools(server: McpServer, services: Services): void {
 			} catch {
 				return { isError: true, content: [{ type: 'text', text: `Failed to fetch etymology for "${word}".` }] };
 			}
-		}
+		})
 	);
-
 }
