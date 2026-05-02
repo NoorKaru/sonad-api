@@ -6,7 +6,9 @@ import ConsoleLogger from '@lib/dictionary/infrastructure/logger/consoleLogger/c
 	const adapter = new EkiScraperAdapter(logger);
 
 	const word = process.argv[2] ?? 'nikerdama';
+	// eslint-disable-next-line no-console
 	console.log(`\n=== Etymology scrape for: ${word} ===`);
 	const result = await adapter.getEtymology(word);
+	// eslint-disable-next-line no-console
 	console.log(JSON.stringify(result, null, 2));
 })();

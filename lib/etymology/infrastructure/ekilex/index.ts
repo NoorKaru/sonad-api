@@ -1,7 +1,7 @@
 import LoggerInterface from '@lib/dictionary/application/ports/logger.interface';
 import EtymologyPort from '@lib/etymology/application/ports/etymology.port';
 import EkiScraperAdapter from '@lib/etymology/infrastructure/eki-scraper/eki-scraper-adapter';
-import InMemoryEtymologyAdapter from './in-memory/in-memory-etymology-adapter';
+import InMemoryEtymologyAdapter from './in-memory/in-memory-etymology-adapter.js';
 import config from '@lib/global-config';
 
 export default {

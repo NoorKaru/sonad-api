@@ -32,7 +32,7 @@ export class Result<T> {
 		return new Result<U>(true, null, value);
 	}
 
-	public static fail<U>(error: any): Result<U> {
+	public static fail<U>(error: U): Result<U> {
 		return new Result<U>(false, error);
 	}
 

@@ -1,10 +1,11 @@
 import { randomUUID } from 'crypto';
 import { Router, Request, Response } from 'express';
-import { McpServer, StreamableHTTPServerTransport } from './sdk-shim';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { Services } from '@lib/config/service-locator';
-import { registerTools } from './register-tools';
-import { registerResources } from './register-resources';
-import { registerPrompts } from './register-prompts';
+import { registerTools } from './register-tools.js';
+import { registerResources } from './register-resources.js';
+import { registerPrompts } from './register-prompts.js';
 
 function buildMcpServer(services: Services): McpServer {
 	const server = new McpServer({ name: 'estonian-language', version: '1.0.0' });

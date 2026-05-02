@@ -1,9 +1,3 @@
-import { WordResponse } from '@lib/dictionary/application/dictionary-v2-service';
-
-const testJson = {
-	test: 'test',
-};
-
 type SearchResult = {
 	searchResult: {
 		wordClasses: string[];

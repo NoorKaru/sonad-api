@@ -1,5 +1,5 @@
-import { AsciiBuiler } from './builder/header';
-import { collectExamples } from './collect-examples';
+import { AsciiBuiler } from './builder/header.js';
+import { collectExamples } from './collect-examples.js';
 import { AsciiPort, DictionaryResponse, SearchResult } from '@lib/dictionary/application/ports/ascii.port';
 
 export class AsciiService implements AsciiPort {

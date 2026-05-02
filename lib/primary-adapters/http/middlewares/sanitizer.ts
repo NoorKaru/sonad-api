@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-const escapeHtml = (unsafe: any): string => {
+const escapeHtml = (unsafe: string): string => {
 	return unsafe
 		.replace(/&/g, '&amp;')
 		.replace(/</g, '&lt;')

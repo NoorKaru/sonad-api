@@ -40,7 +40,7 @@ export default class TranslatorSqlite implements Translator {
 			return null;
 		}
 	}
-	async getTranslations(term: string, from: string, to: string): Promise<string[]> {
+	async getTranslations(_term: string, _from: string, _to: string): Promise<string[]> {
 		return [];
 	}
 

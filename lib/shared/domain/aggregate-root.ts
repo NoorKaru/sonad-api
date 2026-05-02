@@ -1,5 +1,5 @@
 import { UUID } from 'crypto';
-import { Entity } from './entity';
+import { Entity } from './entity.js';
 
 export abstract class AggregateRoot<T> extends Entity<T> {
 	private _domainEvents: string[] = []; // TODO change domain events

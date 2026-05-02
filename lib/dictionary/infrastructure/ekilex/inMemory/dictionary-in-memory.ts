@@ -3,7 +3,7 @@ import ExternalDictionaryV2, {
 } from '@lib/dictionary/application/ports/external-dictionary-v2.interface';
 
 export default class DictionaryV2InMemory implements ExternalDictionaryV2 {
-	async getDictionaryEntry(searchTerm: string): Promise<DictionaryResponseV2> {
+	async getDictionaryEntry(_searchTerm: string): Promise<DictionaryResponseV2> {
 		return [
 			{
 				partOfSpeech: ['noomen'],

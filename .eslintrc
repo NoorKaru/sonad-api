@@ -12,7 +12,8 @@
       "prettier"
     ],
     "rules": {
-      "no-console": 1,       // Means warning
-      "prettier/prettier": 2 // Means error
+      "no-console": 1,
+      "prettier/prettier": 2,
+      "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
     }
   }

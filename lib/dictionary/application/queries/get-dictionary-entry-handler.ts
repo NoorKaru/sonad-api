@@ -1,11 +1,11 @@
 import { QueryHandler, QueryHandlerResponse } from '@lib/shared/bus/query-handler.interface';
-import { GetDictionaryEntryQuery } from './get-dictionary-entry-query';
-import ExternalDictionaryV2 from '../ports/external-dictionary-v2.interface';
+import { GetDictionaryEntryQuery } from './get-dictionary-entry-query.js';
+import ExternalDictionaryV2 from '../ports/external-dictionary-v2.interface.js';
 import Logger from '@lib/dictionary/application/ports/logger.interface';
 import DictionaryCache from '@lib/dictionary/application/ports/dictionary-cache.interface';
 
 export type WordResponse = {
-	[key in string]: any;
+	[key in string]: unknown;
 }[];
 
 export class GetDictionaryQueryHandler implements QueryHandler<GetDictionaryEntryQuery> {

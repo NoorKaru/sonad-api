@@ -10,7 +10,7 @@ export class CustomError {
 	}
 }
 
-const errorHandler = (err: TypeError | CustomError, req: Request, res: Response, next: NextFunction) => {
+const errorHandler = (err: TypeError | CustomError, req: Request, res: Response, _next: NextFunction) => {
 	if (err instanceof CustomError) {
 		return res.status((err as CustomError).status).send(err);
 	}

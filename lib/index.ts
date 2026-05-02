@@ -1,7 +1,7 @@
 require('module-alias/register');
 import createServer from '@lib/primary-adapters/http/server';
 import { buildServices } from '@lib/config/service-locator';
-import config from './global-config';
+import config from './global-config.js';
 
 (async () => {
 	try {

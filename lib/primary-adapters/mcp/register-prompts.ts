@@ -1,4 +1,4 @@
-import { McpServer } from './sdk-shim';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 
 // Same zod-compat depth issue as register-tools.ts — cast to any to bypass.
@@ -40,7 +40,7 @@ Then present a structured explanation covering:
 					},
 				},
 			],
-		}),
+		})
 	);
 
 	s.registerPrompt(
@@ -73,15 +73,14 @@ Format this as a clear study reference a language learner can use.`,
 					},
 				},
 			],
-		}),
+		})
 	);
 
 	s.registerPrompt(
 		'vocabulary_in_context',
 		{
 			title: 'Vocabulary in Context',
-			description:
-				'Explain the key Estonian vocabulary in a sentence or short text, with forms and meanings.',
+			description: 'Explain the key Estonian vocabulary in a sentence or short text, with forms and meanings.',
 			argsSchema: {
 				text: z.string().describe('An Estonian sentence or short text to analyse'),
 			},
@@ -103,6 +102,6 @@ Present a breakdown that helps a language learner understand both the vocabulary
 					},
 				},
 			],
-		}),
+		})
 	);
 }

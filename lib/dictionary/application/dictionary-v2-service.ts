@@ -1,9 +1,9 @@
 import { Bus } from '@lib/shared/bus/bus.interface';
-import { GetDictionaryEntryQuery } from './queries/get-dictionary-entry-query';
+import { GetDictionaryEntryQuery } from './queries/get-dictionary-entry-query.js';
 import { QueryHandlerResponse } from '@lib/shared/bus/query-handler.interface';
 
 export type WordResponse = {
-	[key in string]: any;
+	[key in string]: unknown;
 }[];
 
 export default class DictionaryV2Service {
@@ -22,6 +22,6 @@ export default class DictionaryV2Service {
 		if (!success || !payload) {
 			return null;
 		}
-		return routingBusResponse.payload;
+		return routingBusResponse.payload as WordResponse;
 	}
 }

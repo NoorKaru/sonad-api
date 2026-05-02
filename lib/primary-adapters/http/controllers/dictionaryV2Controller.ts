@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import DictionaryService from '@lib/dictionary/application/dictionary-v2-service';
-import { CustomError } from '../middlewares/error-handler';
+import { CustomError } from '../middlewares/error-handler.js';
 import TranslatorService from '@lib/dictionary/application/translator-service';
 import { AsciiPort, DictionaryResponse } from '@lib/dictionary/application/ports/ascii.port';
 import Logger from '@lib/dictionary/application/ports/logger.interface';
@@ -11,7 +11,12 @@ export default class DictionaryV2Controller {
 	private asciiService: AsciiPort;
 	private logger: Logger;
 
-	constructor(dictionaryService: DictionaryService, translatorService: TranslatorService, logger: Logger, asciiService: AsciiPort) {
+	constructor(
+		dictionaryService: DictionaryService,
+		translatorService: TranslatorService,
+		logger: Logger,
+		asciiService: AsciiPort
+	) {
 		this.dictionaryService = dictionaryService;
 		this.translatorService = translatorService;
 		this.asciiService = asciiService;
@@ -65,13 +70,13 @@ export default class DictionaryV2Controller {
 		}
 	};
 
-	getLucky = () => async (req: Request, res: Response, next: NextFunction) => {
+	getLucky = () => async (req: Request, res: Response, _next: NextFunction) => {
 		res.json({
 			message: 'you got lucky',
 		});
 	};
 
-	private getTranslationDirection(lg?: any): { from: string; to: string } {
+	private getTranslationDirection(lg?: string): { from: string; to: string } {
 		if (!lg || lg === 'et') {
 			return {
 				from: 'et',
@@ -102,7 +107,7 @@ export default class DictionaryV2Controller {
 
 		const { lg } = req.query;
 
-		const { from, to } = this.getTranslationDirection(lg);
+		const { from, to } = this.getTranslationDirection(lg as string | undefined);
 
 		const translations = await this.translatorService.getTranslations(requestedWord, from, to);
 

@@ -1,5 +1,5 @@
 import { UUID } from 'crypto';
-import { Command } from './command.interface';
+import { Command } from './command.interface.js';
 
 export type CommandHandlerResponse = {
 	success: boolean;

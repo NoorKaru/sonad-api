@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import EtymologyService from '@lib/etymology/application/etymology-service';
-import { CustomError } from '../middlewares/error-handler';
+import { CustomError } from '../middlewares/error-handler.js';
 
 export default class EtymologyController {
 	constructor(private readonly etymologyService: EtymologyService) {}

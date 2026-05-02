@@ -13,7 +13,7 @@ export default class TranslatorInMemory implements Translator {
 	async translate(word: string): Promise<string | null> {
 		return InMemoryTranslation[word] ?? '';
 	}
-	async getTranslations(term: string, from: string, to: string): Promise<string[]> {
+	async getTranslations(term: string, _from: string, _to: string): Promise<string[]> {
 		return [InMemoryTranslation[term]];
 	}
 }

@@ -1,4 +1,4 @@
-import { McpServer, ResourceTemplate } from './sdk-shim';
+import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { Services } from '@lib/config/service-locator';
 
 const GRAMMAR_CASES_CONTENT = `# Estonian Grammatical Cases
@@ -61,7 +61,7 @@ export function registerResources(server: McpServer, services: Services): void {
 					},
 				],
 			};
-		},
+		}
 	);
 
 	server.registerResource(
@@ -84,7 +84,7 @@ export function registerResources(server: McpServer, services: Services): void {
 					},
 				],
 			};
-		},
+		}
 	);
 
 	server.registerResource(
@@ -99,6 +99,6 @@ export function registerResources(server: McpServer, services: Services): void {
 					text: GRAMMAR_CASES_CONTENT,
 				},
 			],
-		}),
+		})
 	);
 }

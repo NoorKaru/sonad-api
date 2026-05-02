@@ -4,7 +4,7 @@ import { Either, left, right } from '@lib/shared/common/either';
 
 type ApplicationError = {
 	message: string;
-	error?: any;
+	error?: unknown;
 };
 
 type InvalidWord = {

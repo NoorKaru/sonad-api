@@ -6,14 +6,13 @@
 	"scripts": {
 		"build": "npx tsc",
 		"dev:build": "npx tsc -w",
-		"dev:run": "nodemon -e ts,tsc --exec \"node --inspect=5858 -r ts-node/register ./lib/index.ts\"",
+		"dev:run": "nodemon -e ts,tsc --exec \"node --inspect=5858 --import tsx ./lib/index.ts\"",
 		"dev": "npx concurrently npm:dev:*",
 		"start": "NODE_ENV=production node dist/index.js",
 		"test": "jest --config ./config/jest.json",
 		"debug": "concurrently \"npx tsc --watch\" \"nodemon --inspect=1900 -q dist/index.js\"",
 		"lint": "eslint ./lib --ext .ts",
-		"graph": "npx depcruise lib --include-only '^lib' -x '^(lib/config|lib/shared)' --config --output-type dot | dot -T svg > dependency-graph.svg",
-		"graph:html": "npx depcruise lib --include-only '^lib' -x '^(lib/config|lib/shared)' --config --output-type dot | dot -T svg | depcruise-wrap-stream-in-html > dependency-graph.html",
+		"lint:fix": "eslint ./lib --ext .ts --fix",
 		"prettier-format": "prettier --config .prettierrc 'lib/**/*.ts' --write"
 	},
 	"files": [
@@ -80,6 +79,7 @@
 		"prettier": "^2.6.1",
 		"supertest": "^6.3.3",
 		"ts-jest": "^29.4.9",
+		"tsx": "^4.21.0",
 		"typescript": "^6.0.3",
 		"typescript-eslint": "0.0.1-alpha.0",
 		"winston": "^3.8.1",

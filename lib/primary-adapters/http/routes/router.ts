@@ -2,8 +2,8 @@ import express from 'express';
 import { Services } from '@lib/config/service-locator';
 import { sanitizer } from '@lib/primary-adapters/http/middlewares/index';
 import { register } from '@lib/primary-adapters/http/prom';
-import DictionaryV2Controller from '../controllers/dictionaryV2Controller';
-import EtymologyController from '../controllers/etymologyController';
+import DictionaryV2Controller from '../controllers/dictionaryV2Controller.js';
+import EtymologyController from '../controllers/etymologyController.js';
 
 const routerV2 = express.Router();
 

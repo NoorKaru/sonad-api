@@ -1,7 +1,7 @@
 import Logger from '@lib/dictionary/application/ports/logger.interface';
-import DictionaryV2InMemory from './inMemory/dictionary-in-memory';
+import DictionaryV2InMemory from './inMemory/dictionary-in-memory.js';
 import ExternalDictionaryV2 from '@lib/dictionary/application/ports/external-dictionary-v2.interface';
-import DictonaryEkilex from './dictonary-ekilex';
+import DictonaryEkilex from './dictonary-ekilex.js';
 import { EkilexClient } from '@vanakaru/ekilex-api-client';
 import config from '@lib/global-config';
 

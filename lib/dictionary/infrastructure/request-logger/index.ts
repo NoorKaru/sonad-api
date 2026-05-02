@@ -1,7 +1,7 @@
 import Logger from '@lib/dictionary/application/ports/logger.interface';
-import ConsoleRequestLogger from './console/console-request-logger';
+import ConsoleRequestLogger from './console/console-request-logger.js';
 import RequestLogger from '@lib/dictionary/application/ports/request-logger.interface';
-import PostgresRequestLogger from './postgres/postgres-request-logger';
+import PostgresRequestLogger from './postgres/postgres-request-logger.js';
 import config from '@lib/global-config';
 
 export default {

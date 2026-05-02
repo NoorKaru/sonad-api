@@ -15,7 +15,10 @@ export default class EkiScraperAdapter implements EtymologyPort {
 			const res = await fetch(url);
 			const html = await res.text();
 			const entries = this.parse(html);
-			this.logger.info({ message: `Etymology scraped for "${word}": ${entries.length} entries`, context: 'ETYMOLOGY' });
+			this.logger.info({
+				message: `Etymology scraped for "${word}": ${entries.length} entries`,
+				context: 'ETYMOLOGY',
+			});
 			return entries;
 		} catch (err) {
 			const message = err instanceof Error ? err.message : String(err);
@@ -59,6 +62,7 @@ export default class EkiScraperAdapter implements EtymologyPort {
 
 				if (node.nodeType !== 1) continue;
 
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const el = node as any;
 				const cls: string = el.getAttribute?.('class') ?? '';
 

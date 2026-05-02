@@ -1,4 +1,4 @@
-import { McpServer } from './sdk-shim';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { Services } from '@lib/config/service-locator';
 
@@ -10,7 +10,7 @@ type AnyServer = any;
 
 export function registerTools(server: McpServer, services: Services): void {
 	const s = server as AnyServer;
-	const { dictionaryV2Service, translatorService, asciiService, etymologyService } = services;
+	const { dictionaryV2Service, etymologyService } = services;
 
 	s.registerTool(
 		'lookup_word',
@@ -104,36 +104,11 @@ export function registerTools(server: McpServer, services: Services): void {
 	);
 
 	s.registerTool(
-		'translate_word',
-		{
-			title: 'Translate Word',
-			description: 'Translate a word between Estonian and English using the built-in translation database.',
-			inputSchema: {
-				word: z.string().describe('The word to translate'),
-				from: z.enum(['et', 'en']).describe('Source language: "et" for Estonian, "en" for English'),
-				to: z.enum(['et', 'en']).describe('Target language: "et" for Estonian, "en" for English'),
-			},
-			annotations: { readOnlyHint: true, idempotentHint: true },
-		},
-		async ({ word, from, to }: { word: string; from: 'et' | 'en'; to: 'et' | 'en' }) => {
-			try {
-				const result = await translatorService.getTranslations(word, from, to);
-				if (result.isLeft()) {
-					return { isError: true, content: [{ type: 'text', text: result.payload.message }] };
-				}
-				return { content: [{ type: 'text', text: JSON.stringify(result.payload, null, 2) }] };
-			} catch {
-				return { isError: true, content: [{ type: 'text', text: `Failed to translate "${word}".` }] };
-			}
-		}
-	);
-
-	s.registerTool(
 		'get_etymology',
 		{
 			title: 'Get Estonian Word Etymology',
 			description:
-				'Look up the etymological origin of an Estonian word from the EKI etymological dictionary (dataset: ety). Returns definitions and usage examples explaining the word\'s origin and historical development.',
+				"Look up the etymological origin of an Estonian word from the EKI etymological dictionary (dataset: ety). Returns definitions and usage examples explaining the word's origin and historical development.",
 			inputSchema: { word: z.string().describe('The Estonian word to look up etymology for') },
 			annotations: { readOnlyHint: true, openWorldHint: true, idempotentHint: true },
 		},
@@ -153,32 +128,4 @@ export function registerTools(server: McpServer, services: Services): void {
 		}
 	);
 
-	s.registerTool(
-		'get_ascii',
-		{
-			title: 'Get ASCII Word Display',
-			description:
-				'Get a formatted ASCII text table of a dictionary entry — word forms, meanings, and synonyms in plain text.',
-			inputSchema: { word: z.string().describe('The Estonian word') },
-			annotations: { readOnlyHint: true, idempotentHint: true },
-		},
-		async ({ word }: { word: string }) => {
-			try {
-				const result = await dictionaryV2Service.searchWordQuery(word);
-				if (!result || result.length === 0) {
-					return { isError: true, content: [{ type: 'text', text: `No entry found for "${word}".` }] };
-				}
-				const dictionaryResponse = {
-					searchResult: result as Parameters<typeof asciiService.getAsciiResponse>[0]['searchResult'],
-					translations: [],
-					requestedWord: word,
-					estonianWord: word,
-				};
-				const ascii = asciiService.getAsciiResponse(dictionaryResponse);
-				return { content: [{ type: 'text', text: ascii }] };
-			} catch {
-				return { isError: true, content: [{ type: 'text', text: `Failed to get ASCII for "${word}".` }] };
-			}
-		}
-	);
 }

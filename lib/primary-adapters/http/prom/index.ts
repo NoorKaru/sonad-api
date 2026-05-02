@@ -1,7 +1,7 @@
 import promClient from 'prom-client';
 
-import { requestCounter } from './counters';
-import { requestDuration } from './histograms';
+import { requestCounter } from './counters.js';
+import { requestDuration } from './histograms.js';
 
 const register = new promClient.Registry();
 

@@ -1,4 +1,4 @@
-import EtymologyPort from './ports/etymology.port';
+import EtymologyPort from './ports/etymology.port.js';
 import { EtymologyEntry } from '@lib/etymology/domain/etymology-entry';
 
 export default class EtymologyService {
