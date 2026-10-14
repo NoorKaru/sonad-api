@@ -4,7 +4,27 @@ import ExternalDictionaryV2, {
 import LoggerInterface from '@lib/dictionary/application/ports/logger.interface';
 import { EkilexClient } from '@vanakaru/ekilex-api-client';
 
-import { Forms, Government, Lexeme, Paradigm } from '@vanakaru/ekilex-api-client/lib/src/resources/words';
+import {
+	Forms,
+	Government,
+	Lexeme,
+	Paradigm,
+	WordDetailsResponse,
+	WordRelationMembers,
+} from '@vanakaru/ekilex-api-client/lib/src/resources/words';
+
+type WordRelationGroup = {
+	groupTypeLabel: string;
+	members: WordRelationMembers[] | null;
+};
+
+// Ekilex replaced primaryWordRelationGroups with level1-3WordRelationGroups; not yet in the client types
+type WordRelationDetailsV2 = {
+	primaryWordRelationGroups?: WordRelationGroup[] | null;
+	level1WordRelationGroups?: WordRelationGroup[] | null;
+	level2WordRelationGroups?: WordRelationGroup[] | null;
+	level3WordRelationGroups?: WordRelationGroup[] | null;
+};
 
 type WordForm = {
 	code: string;
@@ -89,6 +109,23 @@ export default class DictonaryEkilex implements ExternalDictionaryV2 {
 		};
 	}
 
+	private extractSimilarWords(wordDetail: WordDetailsResponse): string[] {
+		const relationDetails = wordDetail?.wordRelationDetails as WordRelationDetailsV2 | undefined;
+
+		const relationGroups = [
+			...(relationDetails?.primaryWordRelationGroups ?? []),
+			...(relationDetails?.level1WordRelationGroups ?? []),
+			...(relationDetails?.level2WordRelationGroups ?? []),
+			...(relationDetails?.level3WordRelationGroups ?? []),
+		];
+
+		return (
+			relationGroups
+				.find((group) => group?.groupTypeLabel?.toLowerCase() === 'veel sarnaseid sõnu')
+				?.members?.map((member) => member.wordValue) ?? []
+		);
+	}
+
 	private async getWordIds(searchTerm: string): Promise<number[]> {
 		const searchResult = await this.ekilexClient.words.search(searchTerm, ['eki']);
 		return searchResult.words.map((word) => word.wordId);
@@ -113,10 +150,7 @@ export default class DictonaryEkilex implements ExternalDictionaryV2 {
 					.filter((lexeme) => lexeme.datasetCode === 'eki')
 					.map(this.extractFromLexeme);
 
-				const similarWords =
-					wordDetail?.wordRelationDetails?.primaryWordRelationGroups
-						.find((group) => group?.groupTypeLabel.toLowerCase() === 'veel sarnaseid sõnu')
-						?.members?.map((member) => member.wordValue) ?? [];
+				const similarWords = this.extractSimilarWords(wordDetail);
 
 				return {
 					wordClasses,
@@ -131,6 +165,8 @@ export default class DictonaryEkilex implements ExternalDictionaryV2 {
 			this.logger.error({
 				message: 'Unable to query ekilex',
 				context: 'TRANSLATE',
+				searchTerm,
+				error: err instanceof Error ? err.message : String(err),
 			});
 			throw err;
 		}
