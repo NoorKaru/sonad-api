@@ -100,6 +100,8 @@ export default class DictonaryEkilex implements ExternalDictionaryV2 {
 		}, {});
 
 		return {
+			lexemeId: lexeme.lexemeId,
+			meaningId: lexeme.meaningId,
 			definition: definitions,
 			partOfSpeech: partOfSpeechTags,
 			rection,
@@ -146,16 +148,17 @@ export default class DictonaryEkilex implements ExternalDictionaryV2 {
 
 				const wordForms = wordDetail.word.paradigms.map(this.extractWordFormsFromParadigm).flat();
 
-				const rest = wordDetail.lexemes
+				const meanings = wordDetail.lexemes
 					.filter((lexeme) => lexeme.datasetCode === 'eki')
 					.map(this.extractFromLexeme);
 
 				const similarWords = this.extractSimilarWords(wordDetail);
 
 				return {
+					wordId: wordDetail.word.wordId,
 					wordClasses,
 					wordForms,
-					meanings: rest,
+					meanings,
 					similarWords,
 				};
 			});
